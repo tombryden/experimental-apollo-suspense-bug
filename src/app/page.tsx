@@ -31,7 +31,6 @@ export default function Home() {
 
   const [createPost] = useMutation(CREATE_POST_MUTATION, {
     refetchQueries: [{ query: GET_5_POSTS_QUERY }],
-    awaitRefetchQueries: true,
   });
 
   return (
