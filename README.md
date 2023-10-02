@@ -1,8 +1,7 @@
 ### How To Use
 npm run dev
 
-Click mutate button
-
 ### Observe
-1. The first time you click the 'Mutate' button no refetch query occurs to get all posts
-2. The second time you click the 'Mutate' button the refetch query runs
+1. Page displays "Error" with errorPolicy explicitly declared in useSuspenseQuery hook
+2. Comment out errorPolicy from useSuspenseQuery hook
+3. Apollo throws Unhandled Runtime Error
