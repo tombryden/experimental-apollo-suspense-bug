@@ -12,7 +12,7 @@ import {
 function makeClient() {
   const httpLink = new HttpLink({
     // this needs to be an absolute url, as relative urls cannot be used in SSR
-    uri: "https://graphqlzero.almansi.me/api",
+    uri: "https://countries.trevorblades.com/",
     // you can disable result caching here if you want to
     // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
     // fetchOptions: { cache: "no-store" },
@@ -25,6 +25,11 @@ function makeClient() {
   return new NextSSRApolloClient({
     // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
     cache: new NextSSRInMemoryCache(),
+    defaultOptions: {
+      query: {
+        errorPolicy: "all",
+      },
+    },
     link:
       typeof window === "undefined"
         ? ApolloLink.from([
