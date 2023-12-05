@@ -1,21 +1,29 @@
 "use client";
 
-import { gql, useMutation } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 
-const GET_5_POSTS_QUERY = gql`
-  query countries {
-    countries {
-      namesdfsdf
+const GET_5_POSTS_TITLES_QUERY = gql`
+  query get5PostsTitleOnly {
+    posts(options: { paginate: { limit: 5, page: 1 } }) {
+      data {
+        id
+        title
+      }
     }
   }
 `;
 
 export default function Home() {
-  const { data, error } = useSuspenseQuery(GET_5_POSTS_QUERY, {
-    context: { fetchOptions: { cache: "no-store" } },
-    errorPolicy: "all",
+  const { data } = useSuspenseQuery(GET_5_POSTS_TITLES_QUERY, {
+    context: {
+      fetchOptions: {
+        next: {
+          revalidate: 86400,
+        },
+      },
+    },
   });
 
-  return <main>{error ? <p>Error</p> : <p>{JSON.stringify(data)}</p>}</main>;
+  return <div>{JSON.stringify(data)}</div>;
 }
